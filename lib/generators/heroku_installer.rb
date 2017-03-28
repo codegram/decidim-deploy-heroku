@@ -10,7 +10,7 @@ module Decidim
       end
 
       def set_review_apps_uploads_path_in_initializer
-        gsub_file("config/initializers/decidim.rb", /^end/, <<-INITIALIZER_CONTENT)
+        gsub_file("config/initializers/decidim.rb", /^end/, <<-INITIALIZER_CONTENT.chomp)
   if ENV["HEROKU_APP_NAME"].present?
     config.base_uploads_path = ENV["HEROKU_APP_NAME"] + "/"
   end
@@ -19,7 +19,7 @@ INITIALIZER_CONTENT
       end
 
       def set_seeds_for_review_apps
-        gsub_file("db/seeds.rb", "Decidim.seed!", <<-SEEDS_CONTENT)
+        gsub_file("db/seeds.rb", "Decidim.seed!", <<-SEEDS_CONTENT.chomp)
 if ENV["HEROKU_APP_NAME"].present?
   ENV["DECIDIM_HOST"] = ENV["HEROKU_APP_NAME"] + ".herokuapp.com"
   ENV["SEED"] = true
@@ -29,14 +29,14 @@ Decidim.seed!
       end
 
       def add_production_gems
-        insert_into_file("Gemfile", <<-PRODUCTION_GEMS, after: "group :production do")
-  gem "dalli"
-  gem "sendgrid-ruby"
-  gem "newrelic_rpm"
-  gem "lograge"
-  gem "sentry-raven"
-  gem "sidekiq"
-        PRODUCTION_GEMS
+        gem_group :production do
+          gem "dalli"
+          gem "sendgrid-ruby"
+          gem "newrelic_rpm"
+          gem "lograge"
+          gem "sentry-raven"
+          gem "sidekiq"
+        end
       end
 
       def bundle_install
@@ -46,7 +46,8 @@ Decidim.seed!
       end
 
       def add_context_for_sentry
-        insert_into_file("app/controllers/decidim_controller.rb", <<-SENTRY_CONTEXT, after: "class DecidimController < ApplicationController")
+        insert_into_file("app/controllers/decidim_controller.rb", <<-SENTRY_CONTEXT.chomp, after: "class DecidimController < ApplicationController")
+
   before_action :set_raven_context
 
   private
@@ -60,19 +61,19 @@ Decidim.seed!
       end
 
       def enable_sentry_for_production
-        gsub_file("config/secrets.yml", "default: &default", <<-SENTRY_DEFAULT)
+        gsub_file("config/secrets.yml", "default: &default", <<-SENTRY_DEFAULT.chomp)
 default: &default
   sentry_enabled: false
         SENTRY_DEFAULT
-        gsub_file("config/secrets.yml", "smtp_authentication: \"plain\"", <<-SENTRY_DEFAULT_PROD)
-  smtp_authentication: "plain"
+        gsub_file("config/secrets.yml", "smtp_authentication: \"plain\"", <<-SENTRY_DEFAULT_PROD.chomp)
+smtp_authentication: "plain"
   sentry_enabled: true
         SENTRY_DEFAULT_PROD
       end
 
       def set_dalli_as_cache_store
-        gsub_file("config/environments/production.rb", "# config.cache_store = :mem_cache_store", <<-DALLI_CONFIG)
-  if ENV["MEMCACHEDCLOUD_SERVERS"].present?
+        gsub_file("config/environments/production.rb", "# config.cache_store = :mem_cache_store", <<-DALLI_CONFIG.chomp)
+if ENV["MEMCACHEDCLOUD_SERVERS"].present?
     config.cache_store = :dalli_store, ENV["MEMCACHEDCLOUD_SERVERS"].split(","), {
       username: ENV["MEMCACHEDCLOUD_USERNAME"], password: ENV["MEMCACHEDCLOUD_PASSWORD"]
     }
@@ -82,7 +83,7 @@ default: &default
 
       def lograge_config
         environment(nil, env: "production") do
-"  config.lograge.enabled = true
+"config.lograge.enabled = true
   config.lograge.formatter = Lograge::Formatters::Json.new
   config.lograge.custom_options = lambda do |event|
     {
@@ -92,7 +93,7 @@ default: &default
       organization_id: event.payload[:organization_id],
       referer: event.payload[:referer],
     }
-    end"
+  end"
         end
       end
 
@@ -100,7 +101,7 @@ default: &default
         environment(nil, env: "production") do
           "config.active_job.queue_adapter = :sidekiq"
         end
-        prepend_to_file("config/routes.rb", "require \"sidekiq/web\"")
+        prepend_to_file("config/routes.rb", "require \"sidekiq/web\"\n")
         route "authenticate :user, lambda { |u| u.roles.include?(\"admin\") } do
     mount Sidekiq::Web => '/sidekiq'
   end"
