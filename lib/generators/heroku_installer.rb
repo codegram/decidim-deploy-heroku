@@ -39,6 +39,12 @@ Decidim.seed!
         PRODUCTION_GEMS
       end
 
+      def bundle_install
+        Bundler.with_clean_env do
+          run "bundle install"
+        end
+      end
+
       def add_context_for_sentry
         insert_into_file("app/controllers/decidim_controller.rb", <<-SENTRY_CONTEXT, after: "class DecidimController < ApplicationController")
   before_action :set_raven_context
