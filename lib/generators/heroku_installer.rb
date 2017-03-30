@@ -42,7 +42,7 @@ Decidim.seed!
       end
 
       def remove_puma
-        gsub_file(/^gem 'puma'.*$/, '')
+        gsub_file("Gemfile", /^gem 'puma'.*$/, "")
       end
 
       def bundle_install
