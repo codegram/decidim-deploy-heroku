@@ -124,7 +124,10 @@ if ENV["MEMCACHEDCLOUD_SERVERS"].present?
       def add_readme_info
         append_to_file("README.md", <<-README_INFO)
 ### How to deploy
-1. Use the "Deploy to Heroku" button you'll find in this file
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+1. Use the "Deploy to Heroku" button
 1. Choose a name for the app, and organization and a tier
 1. Fill in the required env vars.
 1. Create the app
