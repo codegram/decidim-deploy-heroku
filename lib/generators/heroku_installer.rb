@@ -115,6 +115,17 @@ if ENV["MEMCACHEDCLOUD_SERVERS"].present?
         template "sidekiq_config.yml.erb", "config/sidekiq.yml"
       end
 
+      def add_readme_info
+        append_to_file("README.md", <<-README_INFO)
+### How to deploy
+1. Use the "Deploy to Heroku" button you'll find in this file
+1. Choose a name for the app, and organization and a tier
+1. Fill in the required env vars.
+1. Create the app
+1. Enable Review Apps for this app (you'll need to create a Pipeline)
+        README_INFO
+      end
+
       private
 
       def app_name
