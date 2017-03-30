@@ -1,6 +1,6 @@
 # decidim-deploy-heroku
 
-An opinionated Rails generator to configure your [`decidim`](https://github.com/AjuntmentdeBarcelona/decidim) app so that it can be deployed to Heroku.
+An opinionated Rails generator to configure your [`decidim`](https://github.com/AjuntamentdeBarcelona/decidim) app so that it can be deployed to Heroku.
 
 ### Usage
 
