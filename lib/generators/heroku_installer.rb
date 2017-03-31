@@ -11,6 +11,7 @@ module Decidim
 
       def set_review_apps_uploads_path_in_initializer
         gsub_file("config/initializers/decidim.rb", /^end/, <<-INITIALIZER_CONTENT.chomp)
+
   if ENV["HEROKU_APP_NAME"].present?
     config.base_uploads_path = ENV["HEROKU_APP_NAME"] + "/"
   end
@@ -123,6 +124,7 @@ if ENV["MEMCACHEDCLOUD_SERVERS"].present?
 
       def add_readme_info
         append_to_file("README.md", <<-README_INFO)
+
 ### How to deploy
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)

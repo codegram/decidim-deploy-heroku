@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|decidim-core)/}) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "rails", Decidim::Deploy::Heroku.rails_version
   spec.add_dependency "decidim", Decidim::Deploy::Heroku.decidim_version
 
   spec.add_development_dependency "bundler", "~> 1.12"
