@@ -7,14 +7,6 @@ module Decidim
         "0.0.1"
       end
 
-      def self.decidim_version
-        "0.0.6"
-      end
-
-      def self.rails_version
-        "~> 5.0.2"
-      end
-
       def self.install
         HerokuInstaller.install
       end
