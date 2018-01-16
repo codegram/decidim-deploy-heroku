@@ -23,7 +23,7 @@ INITIALIZER_CONTENT
         gsub_file("db/seeds.rb", "Decidim.seed!", <<-SEEDS_CONTENT.chomp)
 if ENV["HEROKU_APP_NAME"].present?
   ENV["DECIDIM_HOST"] = ENV["HEROKU_APP_NAME"] + ".herokuapp.com"
-  ENV["SEED"] = true
+  ENV["SEED"] = "true"
 end
 Decidim.seed!
         SEEDS_CONTENT
