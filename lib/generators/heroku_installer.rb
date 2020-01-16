@@ -110,8 +110,9 @@ if ENV["MEMCACHEDCLOUD_SERVERS"].present?
         end
         prepend_to_file("config/routes.rb", "require \"sidekiq/web\"\n")
         route "authenticate :user, lambda { |u| u.roles.include?(\"admin\") } do
-    mount Sidekiq::Web => '/sidekiq'
-  end"
+  mount Sidekiq::Web => '/sidekiq'
+end
+"
       end
 
       def add_procfile
