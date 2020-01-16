@@ -11,7 +11,7 @@
     "sendgrid:starter"
   ],
   "scripts": {
-    "postdeploy":"rake db:schema:load db:migrate db:seed"
+    "postdeploy":"SEED=true rake db:schema:load db:migrate db:seed"
   },
   "env": {
     "AWS_ACCESS_KEY_ID": {
