@@ -75,6 +75,12 @@ default: &default
         gsub_file("config/secrets.yml", "smtp_authentication: \"plain\"", <<-SENTRY_DEFAULT_PROD.chomp)
 smtp_authentication: "plain"
   sentry_enabled: true
+  email: "<%= ENV["EMAIL"] %>"
+  sendgrid: <%= !ENV["SENDGRID_USERNAME"].blank? %>
+  smtp_username: <%= ENV["SMTP_USERNAME"] || ENV["SENDGRID_USERNAME"] %>
+  smtp_password: <%= ENV["SMTP_PASSWORD"] || ENV["SENDGRID_PASSWORD"] %>
+  smtp_address: <%= ENV["SMTP_ADDRESS"] || "smtp.sendgrid.net" %>
+  smtp_domain: <%= ENV["SMTP_DOMAIN"] || "heroku.com" %>
         SENTRY_DEFAULT_PROD
       end
 
