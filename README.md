@@ -23,4 +23,4 @@ Once the last command is performed you can uninstall the gem by removing it from
 
 ### Problems on production
 
-This gem is not supposed to be deployed to a production environment and might fail. See [\#3](https://github.com/codegram/decidim-deploy-heroku/issues/3) for an example of this problem. If you encounter this problem, make sure you have removed the gem for the `Gemfile` and rerun `bundle install` to copletely remove it from the bundle.
+This gem is not supposed to be deployed to a production environment and might fail. See [\#3](https://github.com/codegram/decidim-deploy-heroku/issues/3) for an example of this problem. If you encounter this problem, make sure you have removed the gem for the `Gemfile` and rerun `bundle install` to completely remove it from the bundle.
