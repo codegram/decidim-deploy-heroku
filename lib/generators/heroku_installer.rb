@@ -65,7 +65,7 @@ Decidim.seed!
 
       def add_production_gems
         gem_group :production do
-          gem "passenger"
+          gem "puma"
           gem "fog-aws"
           gem "dalli"
           gem "sendgrid-ruby"
@@ -74,10 +74,6 @@ Decidim.seed!
           gem "sentry-raven"
           gem "sidekiq"
         end
-      end
-
-      def remove_puma
-        gsub_file("Gemfile", /^gem 'puma'.*$/, "")
       end
 
       def bundle_install
